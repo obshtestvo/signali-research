@@ -1,0 +1,82 @@
+extends ../layout
+
+block content
+  h2.display-data Delete Signal?
+            
+  table.table.table-bordered
+    tr
+      th Property
+      th Value
+        tr
+          td Type
+          td= display(signal.type)
+        tr
+          td Institution
+          td= display(signal.institution)
+        tr
+          td Url
+          td= display(signal.url)
+        tr
+          td Email
+          td= display(signal.email)
+        tr
+          td I18n
+          td= display(signal.i18n)
+        tr
+          td Answerguarantee
+          td= display(signal.answerGuarantee)
+        tr
+          td Answertimeframe
+          td= display(signal.answerTimeFrame)
+        tr
+          td Anonimity
+          td= display(signal.anonimity)
+        tr
+          td Verification
+          td= display(signal.verification)
+        tr
+          td Confirmation
+          td= display(signal.confirmation)
+        tr
+          td Responsive
+          td= display(signal.responsive)
+        tr
+          td Middleman
+          td= display(signal.middleMan)
+        tr
+          td Registration
+          td= display(signal.requirements.registration)
+        tr
+          td Photo
+          td= display(signal.requirements.photo)
+        tr
+          td Esignature
+          td= display(signal.requirements.esignature)
+        tr
+          td Name
+          td= display(signal.requirements.name)
+        tr
+          td Remail
+          td= display(signal.requirements.email)
+        tr
+          td Egn
+          td= display(signal.requirements.egn)
+        tr
+          td Address
+          td= display(signal.requirements.address)
+        tr
+          td Location
+          td= display(signal.requirements.location)
+        tr
+          td Tags
+          td= display(signal.tags)
+        tr
+          td Category
+          td= display(signal.category)
+
+
+  form#signal-form.form-horizontal(action="/signals/" + signal._id + "/delete", method="POST")
+    .form-actions
+      a.btn.btn-warning(href="/signals") Back
+      | 
+      input.btn.btn-danger(type="submit", value="Delete")

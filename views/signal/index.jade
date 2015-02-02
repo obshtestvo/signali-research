@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+  h2.display-data Всички сигнали
+    a.btn.btn-primary.pull-right(href="/signals/create") Създай нов сигнал
+
+  table.table.table-bordered.table-striped
+    tr
+        th Тип
+        th Институция
+        th URL на форма
+        th E-mail
+        th Тагове
+        th Категория
+
+    each signal in signals
+      tr
+        td= display(signal.type)
+        td= display(signal.institution)
+        td= display(signal.url)
+        td= display(signal.email)
+        td= display(signal.tags)
+        td= display(signal.category)
+
+        td
+          a(href="/signals/" + signal._id + "/detail", title="Detail")
+            i.glyphicon.glyphicon-search
+          | 
+          a(href="/signals/" + signal._id + "/edit", title="Edit")
+            i.glyphicon.glyphicon-pencil
+          | 
+          a(href="/signals/" + signal._id + "/delete", title="Delete")
+            i.glyphicon.glyphicon-ban-circle

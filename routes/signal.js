@@ -1,4 +1,5 @@
 var Signal = require('../models/signal'),
+    Category = require('../models/category'),
     mapper = require('../lib/model-mapper');
 
 module.exports = function(app) {
@@ -21,7 +22,9 @@ module.exports = function(app) {
     });
 
     app.get('/signals/create', function(req, res) {
-        res.render('signal/create', { signal : new Signal() });
+        Category.find({},function(err,categories) {
+            res.render('signal/create', { signal : new Signal(), categories: categories });
+        })
     });
 
     app.post('/signals/create', function(req, res) { 
@@ -39,7 +42,9 @@ module.exports = function(app) {
     });
 
     app.get('/signals/:signalId/edit', function(req, res) {
-        res.render('signal/edit');
+        Category.find({},function(err,categories) {
+            res.render('signal/edit', { categories: categories });
+        })
     });
 
     app.post('/signals/:signalId/edit', function(req, res) {

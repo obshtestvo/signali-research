@@ -25,11 +25,36 @@ mixin date(field, value)
 mixin datetime(field, value)
   input.form-control(type="datetime", id=field, name=field, value=value)
 
-mixin selection(field, value)
-  input.form-control(type="datetime", id=field, name=field, value=value)
+mixin selection(field, values, selection)
+  select.form-control(type="datetime", id=field, name=field)
+    each value in values
+      option(value=value, selected=selection==value)
+        =value
 
 mixin tags(field, value)
-  input.form-control(type="datetime", id=field, name=field, value=value)
+  input.form-control(type="text", id=field, name=field, value=value)
+  script.
+    $("##{field}").selectize({
+      delimiter: ',',
+      labelField: 'title',
+      valueField: 'title',
+      searchField: 'title',
+      persist: false,
+      create: function(input) {
+          return {title: input};
+      },
+      load: function(query, callback) {
+        $.ajax({
+          url: '/tags',
+          success: function(results) {
+            callback(results);
+          },
+          error: function() {
+            callback();
+          }
+        });
+      }
+    });
 
 //- mixin radios(field, values, titles)
 //- each value,index in values

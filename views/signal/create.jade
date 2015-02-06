@@ -2,7 +2,6 @@ extends ../layout
 include ../mixins/form-helpers
 
 block content
-
   form#signal-form(action="/signals/create", role="form", method="POST")
     fieldset
       legend Въведи нов сигнал
@@ -13,7 +12,7 @@ block content
         .panel-body
           .form-group
             mixin label("type", "Тип")
-            mixin selection("type", signal.type)
+            mixin selection("type", ["Сигнал", "Препоръка", "Оплакване"], signal.type)
             mixin errorMessage(signal, 'type')
           .form-group
             mixin label("institution", "Институция")
@@ -33,7 +32,7 @@ block content
             mixin errorMessage(signal, 'tags')
           .form-group
             mixin label("category", "Category")
-            mixin selection("category", signal.category)
+            mixin selection("category", categories, signal.category)
             mixin errorMessage(signal, 'category')
       .panel.panel-default
         .panel-heading
@@ -47,7 +46,9 @@ block content
             mixin errorMessage(signal, 'answerGuarantee')
           .form-group
             mixin label("answerTimeFrame", "Време за отговор")
-            mixin number("answerTimeFrame", signal.answerTimeFrame)
+            .input-group
+              mixin number("answerTimeFrame", signal.answerTimeFrame)
+              span.input-group-addon дни
             mixin errorMessage(signal, 'answerTimeFrame')
           .form-group
             mixin boolean("anonimity", signal.anonimity, "Позволява ли анонимен сигнал")
@@ -95,6 +96,6 @@ block content
       
 
     .form-actions
-      a.btn.btn-warning(href="/signals") Back
+      a.btn.btn-warning(href="/signals") Назад
       | 
-      input.btn.btn-primary(type="submit", value="Create")
+      input.btn.btn-primary(type="submit", value="Въведи")

@@ -1,10 +1,13 @@
 var util = require('util');
 
-var errorTag = '<span class="error help-inline">%s</span>';
-
 module.exports = function(app) {
     app.locals({
         errorFor : function(model, property) {
+
+            var errorTag = property ?
+                '<span class="error help-inline">%s</span>':
+                '<div class="alert alert-danger">%s</div>';
+
             if (model && model.errors) {
                 if (property && model.errors[property]) {
                     var error = model.errors[property];
@@ -16,6 +19,9 @@ module.exports = function(app) {
                     }
 
                     return util.format(errorTag, error.type || error.message);
+                }
+                else if (!property && model.errors.length > 0) {
+                    return util.format(errorTag, model.errors.map(function(e) { return e.message; }).join(','));
                 }
             }
         },

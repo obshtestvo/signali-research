@@ -15,7 +15,7 @@ var Signal = new Schema({
     confirmation: { type: Boolean },
     responsive: { type: Boolean },
     middleMan: { type: Boolean },
-    tags: { type: [String] },
+    tags: { type: Array },
 
     requirements: {
         registration: { type: Boolean },

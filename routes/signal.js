@@ -1,5 +1,6 @@
 var Signal = require('../models/signal'),
     Category = require('../models/category'),
+    Tag = require('../models/tag'),
     mapper = require('../lib/model-mapper');
 
 module.exports = function(app) {
@@ -13,24 +14,6 @@ module.exports = function(app) {
             };
             next();
         })
-    }
-
-    function translateBooleans(req,res,next) {
-        res.locals.signal.schema.eachPath(function(key,path) {
-
-            if (path.options.type == Boolean) {
-
-                console.log(key + ": " + res.locals.signal.get(key));
-
-                if (res.locals.signal.get(key) === true)
-                    res.locals.signal.set(key,"да");
-                else if (res.locals.signal.get(key) === false)
-                    res.locals.signal.set(key,"не");
-                else res.locals.signal[key] = "не се знае";
-            }
-        });
-
-        next();
     }
     
     app.param('signalId', function(req, res, next, id) {
@@ -60,9 +43,25 @@ module.exports = function(app) {
 
         signal.save(function(err) {
             if (err) {
+                signal.errors = signal.errors || [];
+                signal.errors.push(err);
                 res.render('signal/create', { signal : signal });
             } else {
-                res.redirect('/signals');
+
+                //save tags too - relies on tags having a unique index
+                //consider using Tag.create([tags]) if this fails
+                Tag.create(signal.tags.map(function(tag) {
+                        return {"title":tag};
+                    }),function(err) {
+
+                    //ignore duplicated tags
+                    if (err && err.code != 11000 && err.code != 11001) {
+                        signal.errors.push(err);
+                        res.render('signal/create', { signal : signal });
+                    } else {
+                        res.redirect('/signals');
+                    } 
+                }); 
             }
         });
     });
@@ -76,9 +75,25 @@ module.exports = function(app) {
 
         res.locals.signal.save(function(err) {
             if (err) {
-                res.render('signal/edit');
+                res.locals.signal.errors = signal.errors || [];
+                res.locals.signal.errors.push(err);
+                res.render('signal/edit', { signal : res.locals.signal });
             } else {
-                res.redirect('/signals');
+
+                //save tags too - relies on tags having a unique index
+                //consider using Tag.create([tags]) if this fails
+                Tag.collection.insert(signal.tags.map(function(tag) {
+                        return {"title":tag};
+                    }),function(err) {
+                    
+                    //ignore duplicated tags
+                    if (err && err.code != 11000 && err.code != 11001) {
+                        res.locals.signal.errors.push(err);
+                        res.render('signal/edit', { signal : res.locals.signal });
+                    } else {
+                        res.redirect('/signals');
+                    } 
+                }); 
             }
         });
     });

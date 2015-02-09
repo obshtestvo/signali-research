@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Signal = new Schema({
-    type: { type: String, required: true },
+    type: { type: String, required: true, default: "signal" },
     category: { type: String, required: true  },
     institution: { type: String, required: true },
     url: { type: String },

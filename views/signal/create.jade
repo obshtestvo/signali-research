@@ -12,11 +12,11 @@ block content
         .panel-body
           .form-group
             mixin label("type", "Тип")
-            mixin selection("type", ["Сигнал", "Препоръка", "Оплакване"], signal.type)
+            mixin radios("type", types.values, types.titles, signal.type)
             mixin errorMessage(signal, 'type')
           .form-group
             mixin label("institution", "Институция")
-            mixin text("institution", signal.institution)
+            mixin text("institution", signal.institution, "text", true)
             mixin errorMessage(signal, 'institution')
           .form-group
             mixin label("url", "URL на форма")
@@ -27,75 +27,81 @@ block content
             mixin text("email", signal.email, "email")
             mixin errorMessage(signal, 'email')
           .form-group
-            mixin label("tags", "Tags")
+            mixin label("tags", "Етикети")
             mixin tags("tags", signal.tags)
             mixin errorMessage(signal, 'tags')
           .form-group
-            mixin label("category", "Category")
-            mixin selection("category", categories, signal.category)
+            mixin label("category", "Категория")
+            mixin selection("category", categories, signal.category, true)
             mixin errorMessage(signal, 'category')
       .panel.panel-default
         .panel-heading
           h3.panel-title Подробности
         .panel-body
           .form-group
-            mixin boolean("i18n", signal.i18n, "Мултиезичност")
+            mixin extraboolean("i18n", signal.i18n, "Мултиезичност")
             mixin errorMessage(signal, 'i18n')
           .form-group
-            mixin boolean("answerGuarantee", signal.answerGuarantee, "Гаранция за отговор")
+            mixin extraboolean("answerGuarantee", signal.answerGuarantee, "Гаранция за отговор")
             mixin errorMessage(signal, 'answerGuarantee')
           .form-group
             mixin label("answerTimeFrame", "Време за отговор")
             .input-group
               mixin number("answerTimeFrame", signal.answerTimeFrame)
               span.input-group-addon дни
+            input(type="checkbox", id="atf_undef", name="answerTimeFrame", checked=signal.answerTimeFrame === undefined)
+            | Не знам
             mixin errorMessage(signal, 'answerTimeFrame')
           .form-group
-            mixin boolean("anonimity", signal.anonimity, "Позволява ли анонимен сигнал")
+            mixin extraboolean("anonimity", signal.anonimity, "Позволява ли анонимен сигнал")
             mixin errorMessage(signal, 'anonimity')
           .form-group
-            mixin boolean("verification", signal.verification, "Има ли верификация на сигнал")
+            mixin extraboolean("verification", signal.verification, "Има ли верификация на сигнал")
             mixin errorMessage(signal, 'verification')
           .form-group
-            mixin boolean("confirmation", signal.confirmation, "Има ли потвърждение за сигнал")
+            mixin extraboolean("confirmation", signal.confirmation, "Има ли потвърждение за сигнал")
             mixin errorMessage(signal, 'confirmation')
           .form-group
-            mixin boolean("responsive", signal.responsive, "Поддържа ли се на мобилни устройства")
+            mixin extraboolean("responsive", signal.responsive, "Поддържа ли се на мобилни устройства")
             mixin errorMessage(signal, 'responsive')
           .form-group
-            mixin boolean("middleMan", signal.middleMan, "Това крайният приемник на сигнала ли е?")
+            mixin extraboolean("middleMan", signal.middleMan, "Това крайният приемник на сигнала ли е?")
             mixin errorMessage(signal, 'middleMan')
       .panel.panel-default
         .panel-heading
           h3.panel-title Изисквания за подаване на сигнал
         .panel-body
           .form-group
-            mixin boolean("registration", signal.requirements.registration, "Регистрация")
+            mixin boolean("requirements.registration", signal.requirements.registration, "Регистрация")
             mixin errorMessage(signal, 'registration')
           .form-group
-            mixin boolean("photo", signal.requirements.photo, "Снимка")
+            mixin boolean("requirements.photo", signal.requirements.photo, "Снимка")
             mixin errorMessage(signal, 'photo')
           .form-group
-            mixin boolean("esignature", signal.requirements.esignature, "Електронен подпис")
+            mixin boolean("requirements.esignature", signal.requirements.esignature, "Електронен подпис")
             mixin errorMessage(signal, 'esignature')
           .form-group
-            mixin boolean("name", signal.requirements.name, "Име")
+            mixin boolean("requirements.name", signal.requirements.name, "Име")
             mixin errorMessage(signal, 'name')
           .form-group
-            mixin boolean("remail", signal.requirements.email, "E-mail")
+            mixin boolean("requirements.remail", signal.requirements.email, "E-mail")
             mixin errorMessage(signal, 'remail')
           .form-group
-            mixin boolean("egn", signal.requirements.egn, "ЕГН")
+            mixin boolean("requirements.egn", signal.requirements.egn, "ЕГН")
             mixin errorMessage(signal, 'egn')
           .form-group
-            mixin boolean("address", signal.requirements.address, "Адрес на подателя")
+            mixin boolean("requirements.address", signal.requirements.address, "Адрес на подателя")
             mixin errorMessage(signal, 'address')
           .form-group
-            mixin boolean("location", signal.requirements.location, "Локация за сигнала")
+            mixin boolean("requirements.location", signal.requirements.location, "Локация за сигнала")
             mixin errorMessage(signal, 'location')
-      
 
     .form-actions
       a.btn.btn-warning(href="/signals") Назад
       | 
       input.btn.btn-primary(type="submit", value="Въведи")
+
+  script.
+    $("#atf_undef").on('change',function(e) {
+      $("#answerTimeFrame").prop('disabled', this.checked);
+    })

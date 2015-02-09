@@ -24,6 +24,12 @@ module.exports = function(app) {
             if (util.isDate(value)) {
                 return value.toLocaleDateString();
             }
+            else if (typeof value == "boolean") {
+                if (value === true) return "да";
+                else return "не";
+            }
+            else if (value === undefined)
+                return "не се знае";
 
             return value;
         },

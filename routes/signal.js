@@ -4,6 +4,35 @@ var Signal = require('../models/signal'),
 
 module.exports = function(app) {
 
+    function setLocals(req,res,next) {
+        Category.find({},function(err,categories) {
+            res.locals.categories = categories.map(function(obj) { return obj.title; });
+            res.locals.types = {
+                values: ["signal","recommendation","complaint"],
+                titles: ["Сигнал", "Препоръка", "Оплакване"]
+            };
+            next();
+        })
+    }
+
+    function translateBooleans(req,res,next) {
+        res.locals.signal.schema.eachPath(function(key,path) {
+
+            if (path.options.type == Boolean) {
+
+                console.log(key + ": " + res.locals.signal.get(key));
+
+                if (res.locals.signal.get(key) === true)
+                    res.locals.signal.set(key,"да");
+                else if (res.locals.signal.get(key) === false)
+                    res.locals.signal.set(key,"не");
+                else res.locals.signal[key] = "не се знае";
+            }
+        });
+
+        next();
+    }
+    
     app.param('signalId', function(req, res, next, id) {
         Signal.findById(id, function(err, signal) {
             if (err) {
@@ -21,33 +50,28 @@ module.exports = function(app) {
         });
     });
 
-    app.get('/signals/create', function(req, res) {
-        Category.find({},function(err,categories) {
-            res.render('signal/create', { signal : new Signal(), categories: categories });
-        })
+    app.get('/signals/create', setLocals, function(req, res) {
+        res.render('signal/create', { signal : new Signal() });
     });
 
-    app.post('/signals/create', function(req, res) { 
-        var signal = new Signal(req.body);
+    app.post('/signals/create', setLocals, function(req, res) { 
+        var signal = new Signal();
+        mapper.map(req.body).to(signal);
 
         signal.save(function(err) {
             if (err) {
-                res.render('signal/create', {
-                    signal : signal
-                });
+                res.render('signal/create', { signal : signal });
             } else {
                 res.redirect('/signals');
             }
         });
     });
 
-    app.get('/signals/:signalId/edit', function(req, res) {
-        Category.find({},function(err,categories) {
-            res.render('signal/edit', { categories: categories });
-        })
+    app.get('/signals/:signalId/edit', setLocals, function(req, res) {
+        res.render('signal/edit');
     });
 
-    app.post('/signals/:signalId/edit', function(req, res) {
+    app.post('/signals/:signalId/edit', setLocals, function(req, res) {
         mapper.map(req.body).to(res.locals.signal);
 
         res.locals.signal.save(function(err) {
@@ -76,6 +100,6 @@ module.exports = function(app) {
 
 // Used to build the index page. Can be safely removed!
 module.exports.meta = {
-    name : 'Signal',
+    name : 'Сигнали',
     route : '/signals'
 }

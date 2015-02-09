@@ -36,7 +36,7 @@ var routes = function(app) {
 
     // Defines the root page. can be safely removed!
     app.get('/', function(req, res) {
-        res.render('index', { mainRoutes : mainRoutes });
+        res.redirect('/signals');
     })
 }
 

@@ -1,0 +1,1 @@
+forever start -o signali-research.log -e signali-research-err.log -l forever-signali-research.log -a -c nodemon app.js --exitcrash

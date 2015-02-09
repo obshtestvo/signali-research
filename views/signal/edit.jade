@@ -49,7 +49,7 @@ block content
             .input-group
               mixin number("answerTimeFrame", signal.answerTimeFrame)
               span.input-group-addon дни
-            input(type="checkbox", id="answerTimeFrame_undef", name="answerTimeFrame", checked=signal.answerTimeFrame === undefined)
+            input(type="checkbox", id="answerTimeFrame_undef", name="answerTimeFrame_undef", checked=signal.answerTimeFrame === undefined)
             | Не знам
             mixin errorMessage(signal, 'answerTimeFrame')
           .form-group
@@ -105,4 +105,6 @@ block content
   script.
     $("#answerTimeFrame_undef").on('change',function(e) {
       $("#answerTimeFrame").prop('disabled', this.checked);
+      if (this.checked)
+        $("#answerTimeFrame").val(undefined);
     })

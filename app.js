@@ -60,7 +60,7 @@ Category.on('index',function(err) {
         console.error("Error populating categories: " + JSON.stringify(err));
     else
         Category.collection.insert(categories, {ordered: false}, function(err) {
-            if (err)
+            if (err && err.code != 11000 && err.code != 11001)
                 console.error("Error populating categories: " + JSON.stringify(err));
         });
     });

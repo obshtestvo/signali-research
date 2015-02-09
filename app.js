@@ -52,6 +52,20 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
+// populate initial categories
+var categories = require('./fixtures/categories.json');
+var Category = require('./models/category.js');
+Category.on('index',function(err) {
+    if (err)
+        console.error("Error populating categories: " + JSON.stringify(err));
+    else
+        Category.collection.insert(categories, {ordered: false}, function(err) {
+            if (err)
+                console.error("Error populating categories: " + JSON.stringify(err));
+        });
+    });
+
+// init MVC
 require('./helpers')(app);
 require('./routes')(app);
 

@@ -74,28 +74,28 @@ block content
         .panel-body
           .form-group
             mixin boolean("requirements.registration", signal.requirements.registration, "Регистрация")
-            mixin errorMessage(signal, 'registration')
+            mixin errorMessage(signal, 'requirements.registration')
           .form-group
             mixin boolean("requirements.photo", signal.requirements.photo, "Снимка")
-            mixin errorMessage(signal, 'photo')
+            mixin errorMessage(signal, 'requirements.photo')
           .form-group
             mixin boolean("requirements.esignature", signal.requirements.esignature, "Електронен подпис")
-            mixin errorMessage(signal, 'esignature')
+            mixin errorMessage(signal, 'requirements.esignature')
           .form-group
             mixin boolean("requirements.name", signal.requirements.name, "Име")
-            mixin errorMessage(signal, 'name')
+            mixin errorMessage(signal, 'requirements.name')
           .form-group
-            mixin boolean("requirements.remail", signal.requirements.email, "E-mail")
-            mixin errorMessage(signal, 'remail')
+            mixin boolean("requirements.email", signal.requirements.email, "E-mail")
+            mixin errorMessage(signal, 'requirements.email')
           .form-group
             mixin boolean("requirements.egn", signal.requirements.egn, "ЕГН")
-            mixin errorMessage(signal, 'egn')
+            mixin errorMessage(signal, 'requirements.egn')
           .form-group
             mixin boolean("requirements.address", signal.requirements.address, "Адрес на подателя")
-            mixin errorMessage(signal, 'address')
+            mixin errorMessage(signal, 'requirements.address')
           .form-group
             mixin boolean("requirements.location", signal.requirements.location, "Локация за сигнала")
-            mixin errorMessage(signal, 'location')
+            mixin errorMessage(signal, 'requirements.location')
 
     .form-actions
       a.btn.btn-warning(href="/signals") Назад

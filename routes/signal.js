@@ -82,7 +82,7 @@ module.exports = function(app) {
 
                 //save tags too - relies on tags having a unique index
                 //consider using Tag.create([tags]) if this fails
-                Tag.collection.insert(signal.tags.map(function(tag) {
+                Tag.collection.insert(res.locals.signal.tags.map(function(tag) {
                         return {"title":tag};
                     }),function(err) {
                     

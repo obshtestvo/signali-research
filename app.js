@@ -6,7 +6,6 @@ var config = require('./config');
 
 var MongoStore = require('connect-mongo')(express);
 
-;
 var mongooseConnection = mongoose.connect(config.db.url, function(err) {
     if (err) {
         console.log('Could not connect to database', config.db.url, ' due to error', err);
@@ -59,7 +58,7 @@ Category.on('index',function(err) {
     if (err)
         console.error("Error populating categories: " + JSON.stringify(err));
     else
-        Category.collection.insert(categories, {ordered: false}, function(err) {
+        Category.collection.insert(categories, {ordered: false, upsert:true}, function(err) {
             if (err && err.code != 11000 && err.code != 11001)
                 console.error("Error populating categories: " + JSON.stringify(err));
         });

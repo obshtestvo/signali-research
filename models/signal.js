@@ -2,6 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Signal = new Schema({
+
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+
     type: { type: String, required: true, default: "signal" },
     category: { type: String, required: true  },
     institution: { type: String, required: true },
@@ -15,6 +18,7 @@ var Signal = new Schema({
     confirmation: { type: Boolean },
     responsive: { type: Boolean },
     middleMan: { type: Boolean },
+    location: { type: String },
     tags: { type: Array },
 
     requirements: {

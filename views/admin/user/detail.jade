@@ -1,0 +1,20 @@
+extends ../../layout
+
+block content
+  h2.display-data User Detail
+            
+  table.table.table-bordered
+    tr
+      th Property
+      th Value
+        tr
+          td Name
+          td= display(user.name)
+
+
+  .form-actions
+    a.btn.btn-warning(href="/admin/users") Back
+    | 
+    a.btn.btn-primary(href="/admin/users/" + user._id + "/edit") Edit
+    | 
+    a.btn.btn-danger(href="/admin/users/" + user._id + "/delete") Delete

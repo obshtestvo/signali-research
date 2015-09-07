@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var Signal = new Schema({
 
-    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    //user: { type: Schema.Types.ObjectId, ref: "User", required: true },
 
     type: { type: String, required: true, default: "signal" },
     category: { type: String, required: true  },
@@ -18,7 +18,7 @@ var Signal = new Schema({
     confirmation: { type: Boolean },
     responsive: { type: Boolean },
     middleMan: { type: Boolean },
-    location: { type: String },
+    notes: { type: String },
     tags: { type: Array },
 
     requirements: {
@@ -29,7 +29,9 @@ var Signal = new Schema({
         email: { type: Boolean },
         egn: { type: Boolean },
         address: { type: Boolean },
-        location: { type: Boolean }
+        location: { type: Boolean },
+        tel: {type: Boolean},
+        others: {type: Boolean}
     }
     
 });

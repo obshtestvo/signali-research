@@ -74,8 +74,7 @@ module.exports = function(app) {
 
         res.locals.signal.save(function(err) {
             if (err) {
-                res.locals.signal.errors = signal.errors || [];
-                res.locals.signal.errors.push(err);
+                console.log(err);
                 res.render('signal/edit', { signal : res.locals.signal });
             } else {
 

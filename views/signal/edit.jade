@@ -27,6 +27,10 @@ block content
             mixin text("email", signal.email, "email")
             mixin errorMessage(signal, 'email')
           .form-group
+            mixin label("notes", "Бележки за сигнала")
+            mixin textarea("notes", signal.notes)
+            mixin errorMessage(signal, 'notes')
+          .form-group
             mixin label("tags", "Етикети")
             mixin tags("tags", signal.tags)
             mixin errorMessage(signal, 'tags')
@@ -95,6 +99,12 @@ block content
           .form-group
             mixin boolean("requirements.location", signal.requirements.location, "Локация за сигнала")
             mixin errorMessage(signal, 'requirements.location')
+          .form-group
+            mixin boolean("requirements.tel", signal.requirements.tel, "Телефон на подателя")
+            mixin errorMessage(signal, 'requirements.tel')
+          .form-group
+            mixin boolean("requirements.others", signal.requirements.others, "Други")
+            mixin errorMessage(signal, 'requirements.others')
       
 
     .form-actions

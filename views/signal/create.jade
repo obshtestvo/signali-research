@@ -35,6 +35,10 @@ block content
             mixin label("category", "Категория")
             mixin selection("category", categories, signal.category, true)
             mixin errorMessage(signal, 'category')
+          .form-group
+            mixin label("notes", "Бележки за сигнала")
+            mixin textarea("notes", signal.notes)
+            mixin errorMessage(signal, 'notes')
       .panel.panel-default
         .panel-heading
           h3.panel-title Подробности
@@ -96,6 +100,12 @@ block content
           .form-group
             mixin boolean("requirements.location", signal.requirements.location, "Локация за сигнала")
             mixin errorMessage(signal, 'requirements.location')
+          .form-group
+            mixin boolean("requirements.tel", signal.requirements.tel, "Телефон на подателя")
+            mixin errorMessage(signal, 'requirements.tel')
+          .form-group
+            mixin boolean("requirements.others", signal.requirements.others, "Други")
+            mixin errorMessage(signal, 'requirements.others')
 
     .form-actions
       a.btn.btn-warning(href="/signals") Назад

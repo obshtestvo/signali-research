@@ -1,4 +1,5 @@
 extends ../layout
+include ../mixins/form-helpers
 
 block content
   h2.display-data Всички сигнали
@@ -18,9 +19,10 @@ block content
       tr
         td= display(signal.type)
         td= display(signal.institution)
-        td= display(signal.url)
+        td.url-value
+          mixin url(display(signal.url))
         td= display(signal.email)
-        td= display(signal.tags)
+        td= display(signal.tags.join(", "))
         td= display(signal.category)
 
         td

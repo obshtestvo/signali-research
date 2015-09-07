@@ -16,6 +16,14 @@ body {
 th {
     background-color: #aaaaaa;
 }
+td {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+td.url-value {
+    min-width: 300px;
+}
 form .error {
     color: #B94A48;
 }
@@ -35,4 +43,11 @@ input.form-control[type=number] {
 input[type=checkbox], input[type=radio] {
     vertical-align: middle;
     margin: 2px;
+}
+textarea.url-value {
+    width: 95%;
+    resize: none;
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
 }

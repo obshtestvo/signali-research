@@ -43,8 +43,7 @@ module.exports = function(app) {
 
         signal.save(function(err) {
             if (err) {
-                signal.errors = signal.errors || [];
-                signal.errors.push(err);
+                console.log(err);
                 res.render('signal/create', { signal : signal });
             } else {
 
@@ -56,7 +55,7 @@ module.exports = function(app) {
 
                     //ignore duplicated tags
                     if (err && err.code != 11000 && err.code != 11001) {
-                        signal.errors.push(err);
+                        console.log(err);
                         res.render('signal/create', { signal : signal });
                     } else {
                         res.redirect('/signals');

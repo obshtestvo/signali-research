@@ -71,3 +71,7 @@ mixin tags(field, value)
 
 mixin errorMessage(model, field)
   !{errorFor(model, field)}
+
+mixin url(value)
+  textarea.url-value(rows="3",disabled="disabled")
+    =value

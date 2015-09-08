@@ -1,5 +1,6 @@
 var Signal = require('../models/signal'),
     Category = require('../models/category'),
+    Location =  require('../models/location'),
     Tag = require('../models/tag'),
     mapper = require('../lib/model-mapper');
 
@@ -7,13 +8,18 @@ module.exports = function(app) {
 
     function setLocals(req,res,next) {
         Category.find({},function(err,categories) {
+            if (err) console.log(err);
             res.locals.categories = categories.map(function(obj) { return obj.title; });
-            res.locals.types = {
-                values: ["signal","recommendation","complaint"],
-                titles: ["Сигнал", "Препоръка", "Оплакване"]
-            };
-            next();
-        })
+            Location.find({}).sort({id:1}).exec(function(err,locations) {
+                if (err) console.log(err);
+                res.locals.locations = locations.map(function(obj) { return obj.name; });
+                res.locals.types = {
+                    values: ["signal","recommendation","complaint"],
+                    titles: ["Сигнал", "Препоръка", "Оплакване"]
+                };
+                next();
+            });
+        });
     }
     
     app.param('signalId', function(req, res, next, id) {

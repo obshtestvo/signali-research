@@ -64,6 +64,19 @@ Category.on('index',function(err) {
         });
     });
 
+// populate locations
+var locations = require('./fixtures/municipalities.json');
+var Location = require('./models/location.js');
+Location.on('index',function(err) {
+    if (err)
+        console.error("Error populating locations: " + JSON.stringify(err));
+    else
+        Location.collection.insert(locations, {ordered: false, upsert:true}, function(err) {
+            if (err && err.code != 11000 && err.code != 11001)
+                console.error("Error populating locations: " + JSON.stringify(err));
+        });
+    });
+
 // init MVC
 require('./helpers')(app);
 require('./routes')(app);

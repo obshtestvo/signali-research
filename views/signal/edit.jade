@@ -19,6 +19,10 @@ block content
             mixin text("institution", signal.institution, "text", true)
             mixin errorMessage(signal, 'institution')
           .form-group
+            mixin label("location", "Община")
+            mixin selection("location", locations, signal.location, true)
+            mixin errorMessage(signal, 'location')
+          .form-group
             mixin label("url", "URL на форма")
             mixin text("url", signal.url, "url")
             mixin errorMessage(signal, 'url')
